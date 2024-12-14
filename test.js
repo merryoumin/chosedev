@@ -21,7 +21,7 @@ const questions = [
         answers: ['Yes', 'No'],
         fields: {
             Yes: {'게임 개발': 2, '그래픽스 프로그래밍': 1, 'VR/AR 개발': 1},
-            No: {'웹 개발': 1, '모바일 앱 개발': 1}
+            No: {'풀스택 개발': 1, '모바일 앱 개발': 1}
         }
     },
     {
@@ -29,7 +29,7 @@ const questions = [
         answers: ['Yes', 'No'],
         fields: {
             Yes: {'인공지능 개발': 2, '자연어 처리': 2, '머신러닝': 1},
-            No: {'웹 개발': 1, '데이터베이스 관리': 1}
+            No: {'풀스택 개발': 1, '데이터베이스 관리': 1}
         }
     },
     {
@@ -45,7 +45,7 @@ const questions = [
         answers: ['Yes', 'No'],
         fields: {
             Yes: {'사이버 보안': 2, '네트워크 엔지니어링': 1, '시스템 프로그래밍': 1},
-            No: {'웹 개발': 1, '모바일 앱 개발': 1}
+            No: {'풀스택 개발': 1, '모바일 앱 개발': 1}
         }
     },
     {
@@ -53,7 +53,7 @@ const questions = [
         answers: ['Yes', 'No'],
         fields: {
             Yes: {'VR/AR 개발': 2, '모바일 앱 개발': 1, '게임 개발': 1},
-            No: {'웹 개발': 1, '데이터베이스 관리': 1}
+            No: {'풀스택 개발': 1, '데이터베이스 관리': 1}
         }
     },
     {
@@ -61,7 +61,7 @@ const questions = [
         answers: ['Yes', 'No'],
         fields: {
             Yes: {'블록체인 개발': 2, '암호학': 1, '핀테크 개발': 1},
-            No: {'웹 개발': 1, '데이터베이스 관리': 1}
+            No: {'풀스택 개발': 1, '데이터베이스 관리': 1}
         }
     },
     {
@@ -69,7 +69,7 @@ const questions = [
         answers: ['Yes', 'No'],
         fields: {
             Yes: {'RPA': 2, '스크립팅': 1, '자동화 테스트': 1},
-            No: {'웹 개발': 1, 'UI/UX 디자인': 1}
+            No: {'풀스택 개발': 1, 'UI/UX 디자인': 1}
         }
     },
     {
@@ -77,7 +77,7 @@ const questions = [
         answers: ['Yes', 'No'],
         fields: {
             Yes: {'자연어 처리': 2, '인공지능 개발': 1, '음성 인식': 1},
-            No: {'웹 개발': 1, '데이터베이스 관리': 1}
+            No: {'풀스택 개발': 1, '데이터베이스 관리': 1}
         }
     },
     {
@@ -93,7 +93,7 @@ const questions = [
         answers: ['Yes', 'No'],
         fields: {
             Yes: {'추천 시스템': 2, '머신러닝': 1, '데이터 과학': 1},
-            No: {'웹 개발': 1, '네트워크 엔지니어링': 1}
+            No: {'풀스택 개발': 1, '네트워크 엔지니어링': 1}
         }
     },
     {
@@ -115,7 +115,7 @@ const questions = [
 ];
 
 const recommendations = {
-    '프론트엔드 개발': 'HTML, CSS, JavaScript, React 또는 Vue.js를 학습하세요. 웹 디자인 원칙과 반응형 웹 개발에 대해 공부하면 좋습니다.',
+    '프론트엔드 개발': 'HTML, CSS, JavaScript, React 또는 Vue.js를 학습하세요. 웹 디자인 원칙과 반응형 풀스택 개발에 대해 공부하면 좋습니다.',
     '백엔드 개발': 'Python(Django/Flask), Node.js, 또는 Java(Spring)를 배우세요. 데이터베이스 설계와 API 개발에 대해 학습하세요.',
     '데이터 과학': 'Python, R, pandas, NumPy, scikit-learn을 공부하세요. 통계학과 머신러닝 기초도 함께 학습하면 좋습니다.',
     '인공지능 개발': 'Python, TensorFlow 또는 PyTorch를 배우고, 머신러닝과 딥러닝 알고리즘을 학습하세요.',
@@ -144,7 +144,6 @@ const recommendations = {
     '음성 인식': 'Python과 음성 처리 라이브러리(예: librosa, pydub)를 학습하세요. 신호 처리와 음성학 기초도 공부하면부하면 도움이 됩니다.',
     '보안 프로그래밍': '안전한 코딩 practices를 학습하고, OWASP Top 10 보안 위협에 대해 공부하세요. 암호화 라이브러리 사용법도 익히면 좋습니다.',
 };
-
 
 let currentQuestion = 0;
 const userAnswers = [];
@@ -211,19 +210,3 @@ function showResults() {
 
 // 테스트 시작
 displayQuestion();
-
-// 테스트용 예제 (필요시 주석 해제하여 사용)
-/*
-const exampleAnswers = [
-    'Yes', 'Yes', 'No', 'Yes', 'No',
-    'Yes', 'No', 'Yes', 'Yes', 'No',
-    'Yes', 'No', 'Yes', 'Yes'
-];
-const testResults = runTest(exampleAnswers);
-const topResults = testResults.slice(0, 3);
-const studyRecommendations = getRecommendations(topResults);
-console.log("추천 분야:");
-studyRecommendations.forEach(recommendation => {
-    console.log(recommendation);
-});
-*/
