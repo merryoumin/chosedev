@@ -145,29 +145,22 @@ const recommendations = {
     '보안 프로그래밍': '안전한 코딩 practices를 학습하고, OWASP Top 10 보안 위협에 대해 공부하세요. 암호화 라이브러리 사용법도 익히면 좋습니다.',
 };
 
-let currentQuestion = 0;
-const userAnswers = [];
 
-function runTest(answers) {
-    let fieldScores = {};
-    answers.forEach((answer, i) => {
-        const question = questions[i];
-        const fields = question.fields[answer];
-        for (let [field, score] of Object.entries(fields)) {
-            if (!(field in fieldScores)) {
-                fieldScores[field] = 0;
-            }
-            fieldScores[field] += score;
-        }
-    });
-    return Object.entries(fieldScores).sort((a, b) => b[1] - a[1]);
+let currentQuestion = 0;
+let userAnswers = [];
+
+function startTest() {
+    document.getElementById('startTest').style.display = 'none';
+    document.getElementById('quiz').style.display = 'block';
+    currentQuestion = 0;
+    userAnswers = [];
+    displayQuestion();
 }
 
-function getRecommendations(topFields) {
-    return topFields.map(([field, score]) => {
-        const recommendation = recommendations[field] || "추천 자료가 없습니다.";
-        return `${field} (점수: ${score}): ${recommendation}`;
-    });
+function retakeTest() {
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('retakeTest').style.display = 'none';
+    startTest();
 }
 
 function displayQuestion() {
@@ -192,21 +185,63 @@ function answerQuestion(answer) {
     displayQuestion();
 }
 
+function runTest(answers) {
+    let fieldScores = {};
+    const allYes = answers.every(answer => answer === 'Yes');
+    const allNo = answers.every(answer => answer === 'No');
+
+    if (allYes) {
+        return [['개발의 다양한 분야에 대한 열정과 호기심', Infinity]];
+    } else if (allNo) {
+        return [['IT 분야 내 개발 외 다른 경로 탐색 추천', Infinity]];
+    }
+
+    // 기존의 점수 계산 로직
+    answers.forEach((answer, i) => {
+        const question = questions[i];
+        const fields = question.fields[answer];
+        for (let [field, score] of Object.entries(fields)) {
+            if (!(field in fieldScores)) {
+                fieldScores[field] = 0;
+            }
+            fieldScores[field] += score;
+        }
+    });
+
+    return Object.entries(fieldScores).sort((a, b) => b[1] - a[1]);
+}
+
+function getRecommendations(topFields) {
+    if (topFields[0][0] === '개발의 다양한 분야에 대한 열정과 호기심') {
+        return ["개발의 다양한 분야에 대한 열정과 호기심이 돋보입니다. 이는 폭넓은 시야와 융합적 사고를 가진 개발자로 성장할 수 있는 잠재력을 보여줍니다. 다양한 기술과 도메인에 대한 관심은 혁신적인 솔루션을 만들어내는 데 큰 도움이 될 것입니다. 풀스택 개발이나 DevOps 같은 통합적인 역할을 고려해보는 것도 좋겠습니다."];
+    } else if (topFields[0][0] === 'IT 분야 내 개발 외 다른 경로 탐색 추천') {
+        return ["IT 분야에서 개발 외에도 다양하고 흥미로운 경로가 있습니다. 프로젝트 관리, UX 디자인, 데이터 분석, IT 컨설팅 등 개발 지식을 활용하면서도 다른 역량을 발휘할 수 있는 분야를 탐색해보는 것이 좋겠습니다. 또한, 현재 관심사와 강점을 더 깊이 탐구하여 IT 분야에서 자신만의 독특한 역할을 찾아볼 수도 있습니다. 그래도 개발에 관심이 있다면, 간단한 프로그래밍 입문 강좌를 들어보는 것도 좋은 방법입니다."];
+    }
+    return topFields.map(([field, score]) => {
+        const recommendation = recommendations[field] || "추천 학습 자료가 없습니다.";
+        return `${field} (점수: ${score}): ${recommendation}`;
+    });
+}
+
 function showResults() {
     const resultContainer = document.getElementById('result');
     const testResults = runTest(userAnswers);
     const topResults = testResults.slice(0, 3);
     const studyRecommendations = getRecommendations(topResults);
-
     let resultHTML = "<h2>추천 분야:</h2>";
     studyRecommendations.forEach(recommendation => {
         resultHTML += `<p>${recommendation}</p>`;
     });
-
     resultContainer.innerHTML = resultHTML;
     resultContainer.style.display = 'block';
     document.getElementById('quiz').style.display = 'none';
+    document.getElementById('retakeTest').style.display = 'block';
 }
 
-// 테스트 시작
-displayQuestion();
+// 페이지 로드 시 테스트 시작 버튼만 표시
+window.onload = function() {
+    document.getElementById('startTest').style.display = 'block';
+    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('retakeTest').style.display = 'none';
+};
